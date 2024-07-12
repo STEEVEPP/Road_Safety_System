@@ -8,44 +8,44 @@
 ### Step 1
 Use the Follow link to Clone the repo
 
-git clone https://github.com/STEEVEPP/Road_Safety_System.git
+- **git clone https://github.com/STEEVEPP/Road_Safety_System.git**
 
 ### Step 2
 Create the Virtual Environment and activate it
 
-python3 -m venv Virtualenv
+- **python3 -m venv Virtualenv**
 
-source Virtualenv/bin/activate
+- **source Virtualenv/bin/activate**
 
 ### Step 3
 installing the required packages
 
-pip install -r requirment.txt
+- **pip install -r requirment.txt**
 
-sudo apt install nodejs
-sudo apt install npm
+- **sudo apt install nodejs**
+- **sudo apt install npm**
 
 ### Step 3 (Usage)
 Redirect to the source directory
 #### Terminal 1
 
-cd src/
+- **cd src/**
 
 For Running the project
-python3 object_detection.py --modeldir ../models/MobileNetSSD
+- **python3 object_detection.py --modeldir ../models/MobileNetSSD**
 
 #### Terminal 2
 Redirect to source directory of UI Frontend
 
-cd App_Interface/image-vision-vehicle-main/src
+- **cd App_Interface/image-vision-vehicle-main/src**
 
 Install the npm
 
-npm i
+- **npm i**
 
 Start the npm server
 
-npm start
+- **npm start**
 
 ## Conclusion
   This project presents a Personalized Safety system for cyclists with an edge AI intelligence that makes them more alert during the ride of cycle. Google Maps facilities are also provided for the navigation and the speed of the cycle is also displayed in the UI interface. In the project Object Detection and Depth estimation models are integrated and working together and they play an important role in the safety of the users.
