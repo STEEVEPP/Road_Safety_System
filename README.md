@@ -7,5 +7,5 @@
 ## Getting Started
 Use the Follow link to Clone the repo
 
-git clone [git@github.com:STEEVEPP/Road_Safety_System.git](https://github.com/STEEVEPP/Road_Safety_System.git)
+git clone https://github.com/STEEVEPP/Road_Safety_System.git
 
