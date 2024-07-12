@@ -1,0 +1,194 @@
+// // src/components/SpeedCalculator.js
+// import React, { useEffect, useState } from "react";
+// import haversine from "haversine-distance";
+// import Speedometer, {
+//     Background,
+//     Arc,
+//     Needle,
+//     Progress,
+//     Marks,
+//     Indicator,
+//   } from 'react-speedometer';
+//   import speedBg from './speed_bg.jpg';
+  
+// const SpeedCalculator = () => {
+//   const [currentPosition, setCurrentPosition] = useState(null);
+//   const [lastPosition, setLastPosition] = useState(null);
+//   const [lastTime, setLastTime] = useState(null);
+//   const [speed, setSpeed] = useState(0);
+
+//   useEffect(() => {
+//     if ("geolocation" in navigator) {
+//       const watchId = navigator.geolocation.watchPosition(
+//         (position) => {
+//           const currentTime = Date.now();
+//           const newPosition = {
+//             lat: position.coords.latitude,
+//             lon: position.coords.longitude,
+//           };
+
+//           if (lastPosition && lastTime) {
+//             const timeDiff = (currentTime - lastTime) / 1000; // Time difference in seconds
+//             const distance = haversine(lastPosition, newPosition) / 1000; // Distance in kilometers
+//             const newSpeed = distance / (timeDiff / 3600); // Speed in km/h
+//             setSpeed(newSpeed);
+//           }
+
+//           setLastPosition(newPosition);
+//           setLastTime(currentTime);
+//           setCurrentPosition(newPosition);
+//         },
+//         (error) => {
+//           console.error("Error fetching location", error);
+//         },
+//         {
+//           enableHighAccuracy: true,
+//           maximumAge: 0,
+//           timeout: 5000,
+//         }
+//       );
+
+//       return () => {
+//         navigator.geolocation.clearWatch(watchId);
+//       };
+//     } else {
+//       console.error("Geolocation is not supported by this browser.");
+//     }
+//   }, [lastPosition, lastTime]);
+
+//   return (
+//     <div style={{ backgroundImage: `url(${speedBg})`, backgroundSize: 'cover'}}>
+//       <h1>Vehicle Speed Calculator</h1>
+//       {currentPosition ? (
+//         <div>
+//           <p>Current Position: {`Lat: ${currentPosition.lat}, Lon: ${currentPosition.lon}`}</p>
+//           <p>Speed: {speed.toFixed(2)} km/h</p>
+//         </div>
+//       ) : (
+//         <p>Fetching location...</p>
+//       )}
+
+
+// <Speedometer
+//   value={speed.toFixed(2)}
+//   fontFamily='squada-one'
+  
+// >
+//   <Background />
+//   <Arc/>
+//   <Needle/>
+//   <Progress/>
+//   <Marks/>
+//   <Indicator/>
+// </Speedometer>
+//     </div>
+//   );
+// };
+
+// export default SpeedCalculator;
+
+
+
+import React, { useState, useEffect } from 'react';
+import Speedometer, {
+  Background,
+  Arc,
+  Needle,
+  Progress,
+  Marks,
+  Indicator,
+} from 'react-speedometer';
+import speedBg from './speed_bg.jpg'; // Adjust the path based on your file structure
+import cycle from './cycle.png'; // Adjust the path based on your file structure
+import Lottie from 'react-lottie';
+import animationData from './check.json'; // Adjust the path to your JSON file
+
+
+
+const SpeedCalculator = () => {
+  const [currentPosition, setCurrentPosition] = useState(null);
+  const [speed, setSpeed] = useState(0);
+
+  useEffect(() => {
+    // Function to fetch location
+    const fetchLocation = () => {
+      if (navigator.geolocation) {
+        navigator.geolocation.watchPosition(
+          (position) => {
+            setCurrentPosition({
+              lat: position.coords.latitude,
+              lon: position.coords.longitude,
+            });
+            setSpeed(position.coords.speed || 0);
+          },
+          (error) => {
+            console.error(error);
+          }
+        );
+      } else {
+        console.error('Geolocation is not supported by this browser.');
+      }
+    };
+
+    fetchLocation();
+  }, []);
+
+
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: animationData,
+    rendererSettings: {
+      preserveAspectRatio: 'xMidYMid slice'
+    }
+  };
+
+  return (
+    <div
+      style={{
+        backgroundColor: 'black',
+        height: '98vh',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'top',
+        alignItems: 'center',
+        color: '#fff', 
+        marginTop: '50px'
+      }}
+    >
+      {/* <h1>Vehicle Speed</h1>
+      {currentPosition ? (
+        <div>
+          <p>Current Position: {`Lat: ${currentPosition.lat}, Lon: ${currentPosition.lon}`}</p>
+          <p>Speed: {speed.toFixed(2)} km/h</p>
+        </div>
+      ) : (
+        <p>Fetching location...</p>
+      )} */}
+
+      <Speedometer
+        value={speed.toFixed(2)}
+        fontFamily="squada-one"
+
+      >
+        <Background />
+        <Arc />
+        <Needle />
+        <Progress />
+        <Marks />
+        <Indicator />
+      </Speedometer>
+
+      <img src={cycle} alt="Cycle" style={{ marginTop: '90px', width: '400px' }} />
+
+      <div style={{}}>
+            <Lottie options={defaultOptions} height={150} width={150} />
+            
+          </div>
+    </div>
+  );
+};
+
+export default SpeedCalculator;
+
+
